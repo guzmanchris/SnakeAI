@@ -1,0 +1,5 @@
+
+April 14, 2021 (2:00 p.m. - 6:00 p.m.):
+Pair Programming.
+Participants: Christian and Jomar.
+Progress: Display the grid for the game and start developing algorithm to generate a hamiltonian cycle.
