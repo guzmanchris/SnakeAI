@@ -50,16 +50,30 @@ def hamiltonian_cycle_helper(path, pos, count=1):
     west = (x - STEP, y)
     south = (x, y + STEP)
     east = (x + STEP, y)
-    for point in [north, west, south, east]:
-        x, y = point
-        if 0 < x < WIDTH and 0 < y < HEIGHT and path.get(point, True):
-            print(x, y)
-            path[point] = False
 
-            if hamiltonian_cycle_helper(path, point, count + 1):
-                return True
+    if((WIDTH/STEP)%2!=1):
+        for point in [north, east, south, west]:
+            x, y = point
+            if 0 < x < WIDTH and 0 < y < HEIGHT and path.get(point, True):
+                print(x, y)
+                path[point] = False
 
-            path.pop(point)
+                if hamiltonian_cycle_helper(path, point, count + 1):
+                    return True
+
+                path.pop(point)
+
+    else:
+        for point in [south, west, east, north]:
+            x, y = point
+            if 0 < x < WIDTH and 0 < y < HEIGHT and path.get(point, True):
+                print(x, y)
+                path[point] = False
+
+                if hamiltonian_cycle_helper(path, point, count + 1):
+                    return True
+
+                path.pop(point)
 
     return False
 
