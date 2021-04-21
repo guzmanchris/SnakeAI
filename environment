@@ -33,15 +33,16 @@ class SnakeEnvironment(Environment):
 
         # Draw grid lines
         line_color = (100, 100, 100)
+        self.line_width = 1
         for i in range(step, width, step):
-            game.draw.line(self.surface, line_color, (0, i), (width, i))
+            game.draw.line(self.surface, line_color, (0, i), (width, i), self.line_width)
         for j in range(step, height, step):
-            game.draw.line(self.surface, line_color, (j, 0), (j, height))
+            game.draw.line(self.surface, line_color, (j, 0), (j, height), self.line_width)
 
         # Draw snake
         x, y = self.agent.head.coordinate
         self.snake_color = (79, 132, 55)
-        game.draw.rect(self.surface, self.snake_color, (x, y, self.step, self.step))
+        self.draw_rect(x, y)
 
         # Update Display
         game.display.flip()
@@ -90,11 +91,15 @@ class SnakeEnvironment(Environment):
 
         game.display.flip()
 
+    def new_rect(self, x, y):
+        lw = self.line_width
+        return x + lw, y + lw, self.step - lw, self.step - lw
+
     def draw_rect(self, x, y):
-        game.draw.rect(self.surface, self.agent.snake_color, (x, y, self.step, self.step))
+        game.draw.rect(self.surface, self.agent.snake_color, self.new_rect(x, y))
 
     def delete_rect(self, x, y):
-        game.draw.rect(self.surface, self.background_color, (x, y, self.step, self.step))
+        game.draw.rect(self.surface, self.background_color, self.new_rect(x, y))
 
 
 if __name__ == '__main__':
