@@ -2,4 +2,16 @@
 April 14, 2021 (2:00 p.m. - 6:00 p.m.):
 Pair Programming.
 Participants: Christian and Jomar.
-Progress: Display the grid for the game and start developing algorithm to generate a hamiltonian cycle.
+Progress: -Display the grid for the game and start developing algorithm to generate a hamiltonian cycle.
+
+April 21, 2021 (2:00 p.m. - 6:00 p.m.):
+Pair Programming.
+Participants: Christian and Jomar.
+Progress: -Created the data structure for the snake and coordinates of it's body.  
+          -Implemented the snake agent, movement and possible actions.
+          -Applied movement and time to the snake.
+          -Display the snake on the environment.
+          -The snakes follows the Hamiltonian Cycle.
+          -Polished the Environment.
+          -Base idea for the apple implementation and it's spawning location.
+          
