@@ -13,3 +13,12 @@ Progress: -Created the data structure for the snake and coordinates of it's body
           -The snakes follows the Hamiltonian Cycle.
           -Polished the Environment.
           -Base idea for the apple implementation and it's spawning location.
+          
+April 22, 2021 (2:00 p.m. - 6:20 p.m.):
+Pair Programming.
+Participants: Christian and Jomar.
+Progress: -Created the apple and drew it on the grid.
+          -Draw the apple in a random location in which the snake is not found once it is eaten by the snake.
+          -The snake grows everytime it eats the apple.
+          -The snake follows the hamiltonian path to completion until it is as long as the grid, which means that the snake finished without colliding with itself or walls.
+          -Debbuged the code for errors.
