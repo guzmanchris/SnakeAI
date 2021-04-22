@@ -1,7 +1,7 @@
 from agents import *
 import pygame as game
 from player import *
-from main import hamiltonian_cycle
+import random
 import time
 from conf import *
 
@@ -35,6 +35,19 @@ class SnakeEnvironment(Environment):
         self.snake_color = (79, 132, 55)
         self.draw_rect(x, y)
 
+        # Store available coords for apple placement.
+        self.available_coords = dict()
+        for x in range(0, SCREEN_WIDTH, STEP):
+            for y in range(0, SCREEN_HEIGHT, STEP):
+                coord = (x, y)
+                if not self.agent.snake.get(coord, False):
+                    self.available_coords[coord] = coord
+
+        # Draw apple
+        self.apple_color = (150, 0, 0)
+        self.apple_coord = None
+        self.generate_apple()
+
         # Update Display
         game.display.flip()
 
@@ -59,26 +72,38 @@ class SnakeEnvironment(Environment):
         return valid_steps
 
     def execute_action(self, agent, action):
+        if action is None:
+            return
+
         # Add new head
         self.agent.head.next = Body(action, None)
         self.agent.head = self.agent.head.next
         self.agent.snake[action] = self.agent.head
         self.draw_rect(*action)
+        del self.available_coords[action]
 
-        # Remove tail from body
-        try:
-            del self.agent.snake[self.agent.tail.coordinate]
-            self.delete_rect(*self.agent.tail.coordinate)
-            prev_tail = self.agent.tail
-            self.agent.tail = self.agent.tail.next
-            prev_tail.coordinate = None
-            prev_tail.next = None
-            prev_tail = None
-        except KeyError:
-            # The coordinate of tail is None (snake body only of length 1)
-            self.delete_rect(*self.agent.tail.next.coordinate)
-            del self.agent.snake[self.agent.tail.next.coordinate]
-            self.agent.tail.next = self.agent.head
+        if self.agent.head.coordinate == self.apple_coord:
+            self.generate_apple()
+            if self.agent.tail.coordinate is None:
+                self.agent.tail.coordinate = self.agent.tail.next.coordinate
+                self.agent.tail.next = self.agent.head
+        else:
+            # Remove tail from body
+            try:
+                del self.agent.snake[self.agent.tail.coordinate]
+                self.available_coords[self.agent.tail.coordinate] = self.agent.tail.coordinate
+                self.delete_rect(*self.agent.tail.coordinate)
+                prev_tail = self.agent.tail
+                self.agent.tail = self.agent.tail.next
+                prev_tail.coordinate = None
+                prev_tail.next = None
+                prev_tail = None
+            except KeyError:
+                # The coordinate of tail is None (snake body only of length 1)
+                self.available_coords[self.agent.tail.next.coordinate] = self.agent.tail.next.coordinate
+                self.delete_rect(*self.agent.tail.next.coordinate)
+                del self.agent.snake[self.agent.tail.next.coordinate]
+                self.agent.tail.next = self.agent.head
 
         game.display.flip()
 
@@ -89,17 +114,28 @@ class SnakeEnvironment(Environment):
     def run(self):
         while self.agent.alive:
             self.step()
-            time.sleep(100 / 1000)
+            # time.sleep(100 / 1000)
 
     def new_rect(self, x, y):
         lw = self.line_width
         return x + lw, y + lw, STEP - lw, STEP - lw
 
     def draw_rect(self, x, y):
-        game.draw.rect(self.surface, self.agent.snake_color, self.new_rect(x, y))
+        color = self.snake_color
+        game.draw.rect(self.surface, color, self.new_rect(x, y))
 
     def delete_rect(self, x, y):
         game.draw.rect(self.surface, self.background_color, self.new_rect(x, y))
+
+    def generate_apple(self):
+        if len(self.available_coords) == 0:
+            x, y = self.apple_coord
+            self.draw_rect(x, y)
+            print('Done!')
+        else:
+            self.apple_coord = random.choice(list(self.available_coords.keys()))
+            x, y = self.apple_coord
+            game.draw.rect(self.surface, self.apple_color, self.new_rect(x, y))
 
 
 if __name__ == '__main__':
