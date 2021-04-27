@@ -7,13 +7,11 @@ from conf import *
 
 
 class SnakeEnvironment(Environment):
-    width = 400
-    height = 400
-    step = 40
 
     def __init__(self, agent):
         super(SnakeEnvironment, self).__init__()
         self.agent = agent
+        self.agent.env = self
 
         # Initialize pygame
         game.init()
@@ -114,7 +112,7 @@ class SnakeEnvironment(Environment):
     def run(self):
         while self.agent.alive:
             self.step()
-            # time.sleep(100 / 1000)
+            time.sleep(100 / 1000)
 
     def new_rect(self, x, y):
         lw = self.line_width
@@ -139,7 +137,10 @@ class SnakeEnvironment(Environment):
 
 
 if __name__ == '__main__':
-    agent = HamCycleSnakeAgent()
-    print(agent.tour)
-    environment = SnakeEnvironment(agent)
-    environment.run()
+    # agent = HamCycleSnakeAgent()
+    # print(agent.tour)
+    # environment = SnakeEnvironment(agent)
+    # environment.run()
+
+    SnakeEnvironment(ShortestPathSnakeAgent()).run()
+
