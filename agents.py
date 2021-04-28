@@ -24,6 +24,10 @@ class Snake:
         self.snake = {self.head.coordinate: self.head}
         self.snake_color = (79, 132, 55)
         self.alive = True
+        self.performance = 0
+        self.total_steps = 0
+        self.apples_eaten = 0
+        self.completed_game = False
         self.env = None  # Environment should be set from the environment class.
 
     def action(self, percepts):
@@ -48,6 +52,10 @@ class Snake:
 
 class HamCycleSnakeAgent(Snake):
 
+    @staticmethod
+    def verbose_name():
+        return 'Hamiltonian Cycle Snake Agent'
+
     def __init__(self):
         super(HamCycleSnakeAgent, self).__init__()
         # Calculate a random hamiltonian cycle and store it in self.tour
@@ -71,11 +79,19 @@ class HamCycleSnakeAgent(Snake):
 
 class ShortestPathSnakeAgent(Snake):
 
+    @staticmethod
+    def verbose_name():
+        return 'Shortest Path Snake Agent'
+
     def action(self, percepts):
         return self.min_manhattan_distance(percepts)
 
 
 class HamCycleWithShortcutsSnakeAgent(HamCycleSnakeAgent):
+
+    @staticmethod
+    def verbose_name():
+        return 'Hamiltonian Cycle with Shortcuts Snake Agent'
 
     def action(self, percepts):
         # Find the coordinate that covers the most distance while ensuring all safety constraints are met.

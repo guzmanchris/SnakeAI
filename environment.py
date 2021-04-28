@@ -7,13 +7,15 @@ from conf import *
 
 class SnakeEnvironment:
 
-    def __init__(self, agent):
+    def __init__(self, agent, benchmark=False):
         self.agent = agent
         self.agent.env = self
+        self.benchmark = benchmark
 
         # Initialize pygame
         game.init()
-        self.surface = game.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), game.HWSURFACE)
+        flags = game.HIDDEN if self.benchmark else game.HWSURFACE
+        self.surface = game.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), flags)
         game.display.set_caption('Snake AI')
         self.background_color = (0, 0, 0)
         self.surface.fill(self.background_color)
@@ -69,7 +71,20 @@ class SnakeEnvironment:
 
     def execute_action(self, agent, action):
         if action is None:
+            # Update benchmark information
+            if len(self.available_coords) == 0:
+                self.agent.performance += GRID_SIZE * 10  # Reward of 10 times grid size.
+                self.agent.completed_game = True
+            else:
+                self.agent.performance -= 50*len(self.available_coords)  # Penalty of 50 times the available spaces.
+
+            # Kill agent.
+            self.agent.alive = False
             return
+
+        # Update benchmark information
+        self.agent.performance -= 1  # Deduct points for each step taken.
+        self.agent.total_steps += 1  # Increase step count (used to calculate average steps to apple).
 
         # Add new head
         self.agent.head.next = Body(action, None)
@@ -110,7 +125,9 @@ class SnakeEnvironment:
     def run(self):
         while self.agent.alive:
             self.step()
-            time.sleep(100 / 1000)
+            if not self.benchmark:
+                time.sleep(100 / 1000)
+        game.quit()
 
     def new_rect(self, x, y):
         lw = self.line_width
@@ -124,10 +141,13 @@ class SnakeEnvironment:
         game.draw.rect(self.surface, self.background_color, self.new_rect(x, y))
 
     def generate_apple(self):
+        # Update benchmark information
+        self.agent.performance += 10  # Increase performance measure by 10.
+        self.agent.apples_eaten += 1  # Increase apples eaten count (used to calculate average steps to apple).
+
         if len(self.available_coords) == 0:
             x, y = self.apple_coord
             self.draw_rect(x, y)
-            print('Done!')
         else:
             self.apple_coord = random.choice(list(self.available_coords.keys()))
             x, y = self.apple_coord
