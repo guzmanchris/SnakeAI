@@ -46,6 +46,7 @@ Which strategy would you like your agent to follow?
                     print('Please enter a number between 1 and 3\n')
                     continue
 
+                print('Press + to increase speed or - to decrease it.')
                 SnakeEnvironment(agent).run()
                 print('Successfully completed game?', 'Yes' if agent.completed_game else 'No')
                 print('Its performance measure for this game was:', agent.performance)

@@ -123,10 +123,19 @@ class SnakeEnvironment:
             self.execute_action(self.agent, self.agent.action(self.percept(self.agent)))
 
     def run(self):
+        speed = 100 / 1000 if not self.benchmark else 0
         while self.agent.alive:
             self.step()
-            if not self.benchmark:
-                time.sleep(100 / 1000)
+
+            for event in game.event.get():
+                if not self.benchmark and event.type == game.KEYDOWN:
+                    if event.key == game.K_EQUALS or event.key == game.K_KP_PLUS:
+                        speed = max(0, speed - 100/1000)
+                    elif event.key == game.K_MINUS or event.key == game.K_KP_MINUS:
+                        speed += 100/1000
+
+            time.sleep(speed)
+
         game.quit()
 
     def new_rect(self, x, y):
