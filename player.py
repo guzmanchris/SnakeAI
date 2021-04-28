@@ -84,7 +84,11 @@ class HamCycleWithShortcutsSnakeAgent(HamCycleSnakeAgent):
             if max_shortcut_distance >= path_distance > max_distance_covered:
                 best_shortcut = coordinate
                 max_distance_covered = path_distance
-
+        
+        # If length of snake is one, follow the shortest path to apple.
+        if len(self.snake) == 1:
+            return self.min_manhattan_distance(percepts)
+        
         # If a valid shortcut is found. Take it.
         if best_shortcut is not None:
             return best_shortcut
@@ -113,7 +117,7 @@ class HamCycleWithShortcutsSnakeAgent(HamCycleSnakeAgent):
             # We use a multiplier of 4 as a precautionary buffer.
             n_blocks_2nd_app_possible *= 4
             # If the probability of spawn is greater than 25% subtract 10 as a precaution.
-            if n_blocks_2nd_app_possible/GRID_SIZE > 0.25:
+            if n_blocks_2nd_app_possible/len(self.env.available_coords) > 0.25:
                 max_shortcut_distance -= 10
 
         # Does not overtake apple.
