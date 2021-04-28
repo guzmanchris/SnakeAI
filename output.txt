@@ -1,40 +1,40 @@
 Shortest Path Snake Agent
 n           PM            total_steps            avg_steps_to_app             completed?
-1        -4458                     58                           5                  False
-2        -4543                     83                           9                  False
-3        -4055                    135                           7                  False
-4        -4053                    133                           7                  False
-5        -3672                    232                           8                  False
-6        -3392                    252                           8                  False
-7        -4321                    101                           7                  False
-8        -4329                    109                           8                  False
-9        -4461                     61                           6                  False
-10        -4375                     95                           7                  False
+1        -4247                     87                           6                  False
+2        -3925                    185                           8                  False
+3        -3741                    181                           7                  False
+4        -3736                    176                           7                  False
+5        -3686                    246                           9                  False
+6        -4275                    115                           8                  False
+7        -4520                     60                           6                  False
+8        -4319                     99                           7                  False
+9        -4198                     98                           6                  False
+10        -4366                     86                           7                  False
 
 Hamiltonian Cycle Snake Agent
 n           PM            total_steps            avg_steps_to_app             completed?
-1         -496                   2496                          24                   True
-2         -711                   2711                          27                   True
-3         -438                   2438                          24                   True
-4         -376                   2376                          23                   True
-5         -469                   2469                          24                   True
-6         -556                   2556                          25                   True
-7         -639                   2639                          26                   True
-8         -590                   2590                          25                   True
-9         -695                   2695                          26                   True
-10         -460                   2460                          24                   True
+1         -730                   2730                          27                   True
+2         -626                   2626                          26                   True
+3         -207                   2207                          22                   True
+4         -577                   2577                          25                   True
+5         -395                   2395                          23                   True
+6         -519                   2519                          25                   True
+7         -874                   2874                          28                   True
+8         -734                   2734                          27                   True
+9         -715                   2715                          27                   True
+10         -344                   2344                          23                   True
 
 Hamiltonian Cycle with Shortcuts Snake Agent
 n           PM            total_steps            avg_steps_to_app             completed?
-1          437                   1563                          15                   True
-2          626                   1374                          13                   True
-3          709                   1291                          12                   True
-4          514                   1486                          14                   True
-5          450                   1550                          15                   True
-6          433                   1567                          15                   True
-7          307                   1693                          16                   True
-8          532                   1468                          14                   True
-9          337                   1663                          16                   True
-10          395                   1605                          16                   True
+1          442                   1558                          15                   True
+2          560                   1440                          14                   True
+3          493                   1507                          15                   True
+4          409                   1591                          15                   True
+5          499                   1501                          15                   True
+6          345                   1655                          16                   True
+7          431                   1569                          15                   True
+8          311                   1689                          16                   True
+9          629                   1371                          13                   True
+10          336                   1664                          16                   True
 
 
