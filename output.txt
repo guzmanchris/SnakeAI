@@ -1,0 +1,40 @@
+Shortest Path Snake Agent
+n           PM            total_steps            avg_steps_to_app             completed?
+1        -3684                    184                           7                  False
+2        -3818                    138                           6                  False
+3        -3881                    141                           6                  False
+4        -3626                    186                           7                  False
+5        -4247                     87                           6                  False
+6        -3620                    240                           8                  False
+7        -3235                    275                           8                  False
+8        -3587                    207                           7                  False
+9        -3788                    168                           7                  False
+10        -4265                    105                           7                  False
+
+Hamiltonian Cycle Snake Agent
+n           PM            total_steps            avg_steps_to_app             completed?
+1         -548                   2548                          25                   True
+2         -537                   2537                          25                   True
+3         -530                   2530                          25                   True
+4         -563                   2563                          25                   True
+5         -295                   2295                          22                   True
+6         -586                   2586                          25                   True
+7         -499                   2499                          24                   True
+8         -462                   2462                          24                   True
+9         -217                   2217                          22                   True
+10         -956                   2956                          29                   True
+
+Hamiltonian Cycle with Shortcuts Snake Agent
+n           PM            total_steps            avg_steps_to_app             completed?
+1          479                   1521                          15                   True
+2          541                   1459                          14                   True
+3          428                   1572                          15                   True
+4          281                   1719                          17                   True
+5          345                   1655                          16                   True
+6          645                   1355                          13                   True
+7          492                   1508                          15                   True
+8          623                   1377                          13                   True
+9          490                   1510                          15                   True
+10          616                   1384                          13                   True
+
+

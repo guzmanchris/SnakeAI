@@ -1,136 +1,72 @@
-import pygame as game
-from random import randint
-import time
-
-WIDTH = 400
-HEIGHT = 400
-STEP = 40
-POSITIONS = int((WIDTH/STEP) * (HEIGHT/STEP))
-
-# game.init()
-#
-#
-# surface = game.display.set_mode((WIDTH, HEIGHT), game.HWSURFACE)
-# game.display.set_caption('Snake AI')
-# surface.fill((0, 0, 0))
+import sys
+from agents import *
+from environment import SnakeEnvironment
 
 
-def dfs(initial):
-    frontier = [initial]
-    explored = dict()
-
-    while frontier:
-        point = frontier.pop()
-        explored[point] = False
-        x, y = point
-
-        north = (x, y - STEP/2)
-        west = (x - STEP/2, y)
-        south = (x, y + STEP/2)
-        east = (x + STEP/2, y)
-
-        if y - STEP/2 > 0 and explored.get(north, True):
-            frontier.append(north)
-        if x - STEP/2 > 0 and explored.get(west, True):
-            frontier.append(west)
-        if y + STEP/2 < HEIGHT and explored.get(south, True):
-            frontier.append(south)
-        if x + STEP/2 < WIDTH and explored.get(east, True):
-            frontier.append(east)
-
-    return explored.keys()
+def run_benchmarks(n):
+    result = ''
+    agents = [ShortestPathSnakeAgent, HamCycleSnakeAgent, HamCycleWithShortcutsSnakeAgent]
+    for agent in agents:
+        result += f'{agent.verbose_name()}\n'
+        result += '%s %12s %22s %27s %22s\n' % ('n', 'PM', 'total_steps', 'avg_steps_to_app', 'completed?')
+        for i in range(n):
+            agnt = agent()
+            SnakeEnvironment(agnt, benchmark=True).run()
+            avg = agnt.total_steps//agnt.apples_eaten
+            result += '%s %12s %22s %27s %22s\n' % (i+1, agnt.performance, agnt.total_steps, avg, agnt.completed_game)
+        result += '\n'
+    return result
 
 
-def hamiltonian_cycle_helper(path, pos, count=1):
+if __name__ == '__main__':
+    print('Welcome to the Snake AI game.')
+    while True:
+        option = int(input('''
+What would you like to do?
+    1. Run and display a single game.
+    2. Run a benchmark.
+    3. Exit program.
+:'''))
+        if option == 1:
+            while True:
+                option2 = int(input('''
+Which strategy would you like your agent to follow?
+    1. Choose the coordinate with the minimum distance to the apple (Use a greedy algorithm which uses
+       the manhattan distance as a heuristic).
+    2. Always follow a predetermined hamiltonian cycle.
+    3. Follow a hamiltonian cycle with the possibility of taking shortcuts.
+:'''))
+                if option2 == 1:
+                    agent = ShortestPathSnakeAgent()
+                elif option2 == 2:
+                    agent = HamCycleSnakeAgent()
+                elif option2 == 3:
+                    agent = HamCycleWithShortcutsSnakeAgent()
+                else:
+                    print('Please enter a number between 1 and 3\n')
+                    continue
 
-    # Base case: all positions included in path
-    if count == POSITIONS:
-        return True
+                print('Press + to increase speed or - to decrease it.')
+                SnakeEnvironment(agent).run()
+                print('Successfully completed game?', 'Yes' if agent.completed_game else 'No')
+                print('Its performance measure for this game was:', agent.performance)
+                print('The total steps the snake took were:', agent.total_steps)
+                print('The average steps taken to reach the apple was:', agent.total_steps//agent.apples_eaten)
+                print('\n')
+                break
 
-    x, y = pos
-    north = (x, y - STEP)
-    west = (x - STEP, y)
-    south = (x, y + STEP)
-    east = (x + STEP, y)
-
-    if (WIDTH/STEP) % 2 != 1:
-        possible_actions = [north, east, south, west]
-    else:
-        possible_actions = [south, west, east, north]
-
-    for point in possible_actions:
-        x, y = point
-        if 0 <= x < WIDTH and 0 <= y < HEIGHT and path.get(point, True):
-            print(x, y)
-            path[point] = False
-
-            if hamiltonian_cycle_helper(path, point, count + 1):
-                return True
-
-            path.pop(point)
-
-    return False
-
-
-def hamiltonian_cycle():
-    path = dict()
-    pos = (0, 0)
-    path[pos] = False
-
-    hamiltonian_cycle_helper(path, pos)
-
-    return list(path.keys())
-
-
-def generate_maze():
-    line_color = (100, 100, 100)
-    initial = (20, 20)
-
-    # Create parent dict. All values not found return None.
-    p = dict()
-
-    explored = dict()
-
-    frontier = [initial]
-    while frontier:
-        point = frontier.pop(randint(0, len(frontier) - 1))
-        explored[point] = False
-        x, y = point
-
-        if point != initial:
-            game.draw.line(surface, line_color, p[point], point, 3)
-            game.display.flip()
-            time.sleep(50/1000)
-
-        north = (x, y - STEP)
-        west = (x - STEP, y)
-        south = (x, y + STEP)
-        east = (x + STEP, y)
-
-        if y - STEP > 0 and explored.get(north, True):
-            frontier.append(north)
-            p[north] = point
-        if x - STEP > 0 and explored.get(west, True):
-            frontier.append(west)
-            p[west] = point
-        if y + STEP < HEIGHT and explored.get(south, True):
-            frontier.append(south)
-            p[south] = point
-        if x + STEP < WIDTH and explored.get(east, True):
-            frontier.append(east)
-            p[east] = point
-
-
-# line_color = (100, 100, 100)
-# for i in range(STEP, WIDTH, STEP):
-#     game.draw.line(surface, line_color, (0, i), (WIDTH, i))
-# for j in range(STEP, HEIGHT, STEP):
-#     game.draw.line(surface, line_color, (j, 0), (j, HEIGHT))
-
-# path = hamiltonian_cycle()
-# print(path)
-# print(len(path))
-# game.draw.lines(surface, line_color, False, path, 3)
-
-# game.display.flip()
-# generate_maze()
+        elif option == 2:
+            n = int(input('Enter the amount of simulations you want to run per agent (Try to keep the number small): '))
+            print('Please wait while the process completes...')
+            result = run_benchmarks(n)
+            print(result)
+            original = sys.stdout
+            sys.stdout = open('output.txt', 'wt')
+            print(result)
+            sys.stdout = original
+            print('The results have been stored in the output.txt file')
+        elif option == 3:
+            exit()
+        else:
+            print('Please enter a number between 1 and 3\n')
+            continue
