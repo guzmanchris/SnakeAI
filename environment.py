@@ -137,10 +137,8 @@ class SnakeEnvironment(Environment):
 
 
 if __name__ == '__main__':
-    # agent = HamCycleSnakeAgent()
-    # print(agent.tour)
-    # environment = SnakeEnvironment(agent)
-    # environment.run()
-
-    SnakeEnvironment(ShortestPathSnakeAgent()).run()
+    agent = HamCycleWithShortcutsSnakeAgent()
+    print(agent.tour)
+    environment = SnakeEnvironment(agent)
+    environment.run()
 
