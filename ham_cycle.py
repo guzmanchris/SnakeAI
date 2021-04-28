@@ -1,6 +1,6 @@
 import numpy as np
 from random import randint
-from conf import GRID_HEIGHT, GRID_WIDTH
+from conf import *
 
 
 class HamCycle:
@@ -197,7 +197,7 @@ class HamCycle:
             elif next_dir == 'Up':
                 y -= 1
 
-            if number >= GRID_WIDTH * GRID_HEIGHT - 1:
+            if number >= GRID_SIZE:
                 break
 
     def print_maze(self):

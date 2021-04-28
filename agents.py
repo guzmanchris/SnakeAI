@@ -1,3 +1,4 @@
+import random
 from ham_cycle import HamCycle
 from conf import STEP, GRID_SIZE
 from sys import maxsize
@@ -59,6 +60,8 @@ class HamCycleSnakeAgent(Snake):
             x, y = coordinate
             if self.tour[y//STEP][x//STEP] == next_pos:
                 return coordinate
+        # If for any reason the next step is not found. Choose the next position at random
+        return random.choice(percepts) if percepts else None
 
     def path_distance(self, coord1, coord2):
         x1, y1 = coord1
