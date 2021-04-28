@@ -1,15 +1,13 @@
-from agents import *
 import pygame as game
-from player import *
 import random
 import time
+from agents import *
 from conf import *
 
 
-class SnakeEnvironment(Environment):
+class SnakeEnvironment:
 
     def __init__(self, agent):
-        super(SnakeEnvironment, self).__init__()
         self.agent = agent
         self.agent.env = self
 
@@ -134,11 +132,3 @@ class SnakeEnvironment(Environment):
             self.apple_coord = random.choice(list(self.available_coords.keys()))
             x, y = self.apple_coord
             game.draw.rect(self.surface, self.apple_color, self.new_rect(x, y))
-
-
-if __name__ == '__main__':
-    agent = HamCycleWithShortcutsSnakeAgent()
-    print(agent.tour)
-    environment = SnakeEnvironment(agent)
-    environment.run()
-
