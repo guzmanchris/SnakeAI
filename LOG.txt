@@ -1,4 +1,3 @@
-  
 April 14, 2021 (2:00 p.m. - 6:00 p.m.):
 Pair Programming.
 Participants: Christian and Jomar.
@@ -23,3 +22,20 @@ Progress: -Created the apple and drew it on the grid.
           -The snake grows everytime it eats the apple.
           -The snake follows the hamiltonian path to completion until it is as long as the grid, which means that the snake finished without colliding with itself or walls.
           -Debbuged the code for errors.
+
+April 27, 2021 (2:00 p.m. - 6:20 p.m.):
+Pair Programming.
+Participants: Christian and Jomar.
+Progress: -Implemented the mix agent which used the Shortcuts and the Hamiltonian cycle for a more efficient agent.
+          -Debugging and fixing error.
+          
+          April 28, 2021 (2:00 p.m. - 6:20 p.m.):
+Pair Programming.
+Participants: Christian and Jomar.
+Progress: -Created a simple interface for the game.
+          -Fixed a bug with regards to the Hamiltonian cycle.
+          -Debugged and fixed errors.
+          -Implemented a benchmark for the agents.
+          -Implemented code to provide data about the performance of each of the agents.
+          -Fixing the structure of the code.
+
