@@ -1,3 +1,9 @@
+"""
+This file includes the implementation of the three AI agents that are to play the game. The implementation is based
+on ideas from: Artificial Intelligence: A Modern Approach, 3rd ed, Russel and Norvig, 2010 and on the code implemented
+in https://github.com/aimacode/aima-python/blob/master/agents.py
+"""
+
 import random
 from ham_cycle import HamCycle
 from conf import STEP, GRID_SIZE

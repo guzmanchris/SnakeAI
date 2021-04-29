@@ -1,3 +1,9 @@
+"""
+This file contains the relevant code to displaying and performing actions on the environment. The implementation is
+based on ideas from: Artificial Intelligence: A Modern Approach, 3rd ed, Russel and Norvig, 2010 and the Environment
+class from https://github.com/aimacode/aima-python/blob/master/agents.py
+"""
+
 import pygame as game
 import random
 import time
