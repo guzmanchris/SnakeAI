@@ -25,3 +25,5 @@ The program is runned from the main.py file.
 * output.txt: Stores the results of the benchmarks that can be ran in the program.
 
 * LOG.txt: a detailed log of all pair programming sessions and the progress achieved in each meeting.
+
+* SnakeAI.mp4: A short video demostration of the project. 
